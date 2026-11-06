@@ -7,3 +7,18 @@
  */
 
 import './echo';
+document.addEventListener('livewire:init', () => {
+
+    Livewire.hook('request', ({ options }) => {
+
+        const socketId = window.Echo ? .socketId();
+
+        if (socketId) {
+            options.headers['X-Socket-ID'] = socketId;
+        } else {
+            delete options.headers['X-Socket-ID'];
+        }
+
+    });
+
+});
